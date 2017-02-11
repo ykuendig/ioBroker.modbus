@@ -845,6 +845,8 @@ var main = {
                         main.ac.disInputs.splice(i, 1);
                         continue;
                     }
+
+                    main.ac.disInputs[i].deviceIdx	= main.ac.disInputs[i].deviceIdx || 1;
                     main.ac.disInputs[i].id = 'discreteInputs.';
                     if (main.acp.showAliases) {
                         main.ac.disInputs[i].id += address2alias('disInputs', address, main.acp.directAddresses);
@@ -876,6 +878,7 @@ var main = {
                         continue;
                     }
 
+                    main.ac.coils[i].deviceIdx	= main.ac.coils[i].deviceIdx || 1;
                     main.ac.coils[i].id = 'coils.';
                     if (main.acp.showAliases) {
                         main.ac.coils[i].id += address2alias('coils', address, main.acp.directAddresses);
@@ -911,9 +914,10 @@ var main = {
                         continue;
                     }
 
-                    main.ac.inputRegs[i].type   = main.ac.inputRegs[i].type || 'uint16be';
-                    main.ac.inputRegs[i].offset = parseFloat(main.ac.inputRegs[i].offset) || 0;
-                    main.ac.inputRegs[i].factor = parseFloat(main.ac.inputRegs[i].factor) || 1;
+                    main.ac.inputRegs[i].deviceIdx	= main.ac.inputRegs[i].deviceIdx || 1;
+                    main.ac.inputRegs[i].type		= main.ac.inputRegs[i].type || 'uint16be';
+                    main.ac.inputRegs[i].offset		= parseFloat(main.ac.inputRegs[i].offset) || 0;
+                    main.ac.inputRegs[i].factor		= parseFloat(main.ac.inputRegs[i].factor) || 1;
                     if (main.ac.inputRegs[i].type === 'string') {
                         main.ac.inputRegs[i].len = parseInt(main.ac.inputRegs[i].len) || 1;
                     } else {
@@ -981,9 +985,10 @@ var main = {
                         continue;
                     }
 
-                    main.ac.holdingRegs[i].type   = main.ac.holdingRegs[i].type || 'uint16be';
-                    main.ac.holdingRegs[i].offset = parseFloat(main.ac.holdingRegs[i].offset) || 0;
-                    main.ac.holdingRegs[i].factor = parseFloat(main.ac.holdingRegs[i].factor) || 1;
+                    main.ac.holdingRegs[i].deviceIdx	= main.ac.holdingRegs[i].deviceIdx || 1;
+                    main.ac.holdingRegs[i].type			= main.ac.holdingRegs[i].type || 'uint16be';
+                    main.ac.holdingRegs[i].offset		= parseFloat(main.ac.holdingRegs[i].offset) || 0;
+                    main.ac.holdingRegs[i].factor		= parseFloat(main.ac.holdingRegs[i].factor) || 1;
                     if (main.ac.holdingRegs[i].type === 'string') {
                         main.ac.holdingRegs[i].len = parseInt(main.ac.holdingRegs[i].len) || 1;
                     } else {
@@ -1109,8 +1114,9 @@ var main = {
                         def:     false
                     },
                     native: {
-                        regType:  'disInputs',
-                        address:   main.ac.disInputs[i].address
+                        regType: 'disInputs',
+						device:  main.ac.disInputs[i].deviceIdx,
+                        address: main.ac.disInputs[i].address
                     }
                 };
                 createExtendObject(main.ac.disInputs[i].id, objects[id]);
@@ -1133,6 +1139,7 @@ var main = {
                     },
                     native: {
                         regType:   'coils',
+						device:    main.ac.coils[i].deviceIdx,
                         address:   main.ac.coils[i].address,
                         poll:      main.ac.coils[i].poll,
                         wp:        main.ac.coils[i].wp
@@ -1160,6 +1167,7 @@ var main = {
                     },
                     native: {
                         regType:  'inputRegs',
+						device:    main.ac.inputRegs[i].deviceIdx,
                         address:   main.ac.inputRegs[i].address,
                         type:      main.ac.inputRegs[i].type,
                         len:       main.ac.inputRegs[i].len,
@@ -1190,6 +1198,7 @@ var main = {
                     },
                     native: {
                         regType:   'holdingRegs',
+						device:    main.ac.holdingRegs[i].deviceIdx,
                         address:   main.ac.holdingRegs[i].address,
                         poll:      main.ac.holdingRegs[i].poll,/*,
                          wp:        main.ac.coils[i].wp*/
